@@ -1,0 +1,17 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import '@fontsource/im-fell-english/400.css'
+import '@fontsource/atkinson-hyperlegible/400.css'
+import '@fontsource/atkinson-hyperlegible/700.css'
+import './styles/theme.css'
+import App from './App'
+
+const root = document.getElementById('root')
+if (!root) throw new Error('No se encontró el elemento #root')
+
+createRoot(root).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)

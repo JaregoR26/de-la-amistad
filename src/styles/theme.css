@@ -1,0 +1,232 @@
+/*
+ * Tema "3 a. m. en la presa": se apoya en las variables CSS de Bootstrap 5.3
+ * (data-bs-theme="dark") y solo redefine paleta, tipografía y las tarjetas de juego.
+ */
+
+@property --light {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 100%;
+}
+
+:root[data-bs-theme='dark'] {
+  --abyss: #0b1412;
+  --mud: #16231f;
+  --mud-raised: #1d2f29;
+  --fog: #9bafa4;
+  --bone: #e6dfc9;
+  --lantern: #d9a04f;
+  --blood: #c4504a;
+  --moss: #6aa17c;
+  --rust: #b9794a;
+  --water: #7fb0c4;
+  --veil: #a58bc0;
+
+  --bs-body-bg: var(--abyss);
+  --bs-body-color: var(--bone);
+  --bs-secondary-color: var(--fog);
+  --bs-body-font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --bs-border-color: #2b4038;
+  --bs-card-bg: var(--mud);
+  --bs-card-cap-bg: transparent;
+  --bs-card-border-color: #2b4038;
+
+  /* Los colores semánticos de Bootstrap se re-asignan a la paleta del juego. */
+  --bs-warning-rgb: 217, 160, 79;
+  --bs-danger-rgb: 196, 80, 74;
+  --bs-success-rgb: 106, 161, 124;
+  --bs-info-rgb: 165, 139, 192;
+  --bs-secondary-rgb: 155, 175, 164;
+}
+
+/* Botones: Bootstrap los pinta con variables propias por componente. */
+.btn-warning {
+  --bs-btn-color: #1c1306;
+  --bs-btn-bg: var(--lantern);
+  --bs-btn-border-color: var(--lantern);
+  --bs-btn-hover-color: #1c1306;
+  --bs-btn-hover-bg: #e8b672;
+  --bs-btn-hover-border-color: #e8b672;
+  --bs-btn-active-color: #1c1306;
+  --bs-btn-active-bg: #c48c3f;
+  --bs-btn-active-border-color: #c48c3f;
+  --bs-btn-focus-shadow-rgb: 217, 160, 79;
+  --bs-btn-disabled-color: #1c1306;
+  --bs-btn-disabled-bg: #6e5a3a;
+  --bs-btn-disabled-border-color: #6e5a3a;
+}
+
+.btn-outline-danger {
+  --bs-btn-color: #e07a73;
+  --bs-btn-border-color: var(--blood);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--blood);
+  --bs-btn-hover-border-color: var(--blood);
+  --bs-btn-active-bg: #a8403b;
+  --bs-btn-active-border-color: #a8403b;
+  --bs-btn-focus-shadow-rgb: 196, 80, 74;
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--bone);
+  --bs-btn-border-color: #4a6258;
+  --bs-btn-hover-color: var(--abyss);
+  --bs-btn-hover-bg: var(--fog);
+  --bs-btn-hover-border-color: var(--fog);
+  --bs-btn-active-color: var(--abyss);
+  --bs-btn-active-bg: #8aa095;
+  --bs-btn-disabled-color: #6d8278;
+  --bs-btn-disabled-border-color: #33463e;
+}
+
+.progress {
+  --bs-progress-bg: #223630;
+  --bs-progress-height: 0.85rem;
+}
+
+.accordion {
+  --bs-accordion-bg: transparent;
+  --bs-accordion-btn-bg: transparent;
+  --bs-accordion-active-bg: var(--mud-raised);
+  --bs-accordion-active-color: var(--bone);
+}
+
+.offcanvas,
+.modal-content {
+  --bs-offcanvas-bg: var(--mud);
+  --bs-modal-bg: var(--mud);
+}
+
+/* ---------------------------------------------------------------------- */
+/*  Mesa                                                                   */
+/* ---------------------------------------------------------------------- */
+
+.night-table {
+  --light: 100%;
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+/*
+ * La luz de la linterna: un resplandor cálido alrededor del tablero y una
+ * oscuridad que se cierra en los bordes cuando baja la vida. Está detrás del
+ * contenido, así que las cartas siempre se leen.
+ */
+.night-table::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 50% 28%,
+      rgba(217, 160, 79, 0.16) 0,
+      rgba(217, 160, 79, 0) calc(var(--light) * 0.62)
+    ),
+    radial-gradient(
+      circle at 50% 28%,
+      rgba(0, 0, 0, 0) calc(var(--light) * 0.5),
+      rgba(0, 0, 0, 0.78) calc(var(--light) * 1.15)
+    );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .night-table::before {
+    transition: --light 0.9s ease;
+  }
+
+  /* Único movimiento no iniciado por la persona: la linterna titila al borde de la muerte. */
+  .night-table[data-low-health='true']::before {
+    animation: lantern-flicker 2.4s steps(1, end) infinite;
+  }
+
+  @keyframes lantern-flicker {
+    0%, 62%, 68%, 100% { opacity: 1; }
+    64% { opacity: 0.55; }
+    66% { opacity: 0.85; }
+  }
+}
+
+.brand,
+.hero-line,
+.play-card__name {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-weight: 400;
+}
+
+.brand {
+  font-size: 1.5rem;
+  color: var(--lantern);
+}
+
+.hero-line {
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  line-height: 1.15;
+  max-width: 30ch;
+  text-wrap: balance;
+}
+
+/* ---------------------------------------------------------------------- */
+/*  Cartas                                                                 */
+/* ---------------------------------------------------------------------- */
+
+.play-card {
+  --kind: var(--fog);
+  background: linear-gradient(180deg, var(--mud-raised), var(--mud));
+  border-color: color-mix(in srgb, var(--kind) 45%, transparent);
+  border-top: 3px solid var(--kind);
+  min-height: 11rem;
+}
+
+.play-card[data-kind='weapon'] { --kind: var(--lantern); }
+.play-card[data-kind='potion'] { --kind: var(--moss); }
+.play-card[data-kind='fauna'] { --kind: var(--rust); }
+.play-card[data-kind='spirit'] { --kind: var(--water); }
+.play-card[data-kind='curse'] { --kind: var(--veil); }
+
+.play-card__corner {
+  display: flex;
+  gap: 0.35rem;
+  align-items: baseline;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.play-card[data-suit='hearts'] .play-card__corner,
+.play-card[data-suit='diamonds'] .play-card__corner {
+  color: var(--blood);
+}
+
+.play-card__name {
+  font-size: 1.5rem;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.play-card__kind {
+  color: var(--kind);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.chronicle__item {
+  font-size: 0.95rem;
+}
+
+/* Amanecer (avance del mazo) */
+.dawn__svg {
+  flex: none;
+  width: 10rem;
+  height: auto;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dawn__sun {
+    transition: transform 1s ease;
+  }
+}
