@@ -42,6 +42,7 @@ export type GameStatus = 'playing' | 'won' | 'lost'
 
 export interface GameState {
   readonly seed: number
+  readonly hardMode: boolean
   readonly status: GameStatus
   readonly health: number
   /** El índice 0 es la carta de arriba. */

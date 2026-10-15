@@ -7,7 +7,8 @@ import {
   MAX_MONSTER_RANK,
   ZONE_PICKS,
   ZONE_SIZE,
-  TOTAL_CARDS
+  TOTAL_CARDS,
+  HARD_CURSE_DURATION_ZONES,
 } from './constants'
 import { curseForCard, hasCurse, withCurse } from './curses'
 import { shuffledDeck } from './deck'
@@ -27,10 +28,15 @@ const fail = (error: RuleErrorCode): ActionResult => ({ ok: false, error })
 /*  Creación                                                                  */
 /* -------------------------------------------------------------------------- */
 
-export function createGame(seed: number = randomSeed()): GameState {
+export interface GameOptions {
+  readonly hardMode?: boolean
+}
+
+export function createGame(seed: number = randomSeed(), options: GameOptions = {}): GameState {
   const deck = shuffledDeck(seed)
   return {
     seed,
+    hardMode: options.hardMode ?? false,
     status: 'playing',
     health: MAX_HEALTH,
     deck: deck.slice(ZONE_SIZE),
@@ -48,6 +54,13 @@ export function createGame(seed: number = randomSeed()): GameState {
   }
 }
 
+/**
+ * Cambia el modo de juego. Solo es válido antes de la primera acción: conserva el
+ * mismo reparto. Con la partida ya empezada devuelve el estado sin cambios.
+ */
+export function withHardMode(state: GameState, hardMode: boolean): GameState {
+  return state.log.length === 0 ? createGame(state.seed, { hardMode }) : state
+}
 /* -------------------------------------------------------------------------- */
 /*  Consultas (seguras para usar desde la UI y desde el asistente de IA)      */
 /* -------------------------------------------------------------------------- */
@@ -170,7 +183,12 @@ function playCard(state: GameState, cardId: string, useWeapon: boolean): ActionR
       if (curse) {
         next = {
           ...next,
-          curses: withCurse(state.curses, curse, state.zonesCompleted + CURSE_DURATION_ZONES),
+          curses: withCurse(
+            state.curses,
+            curse,
+            state.zonesCompleted +
+            (state.hardMode ? HARD_CURSE_DURATION_ZONES : CURSE_DURATION_ZONES),
+          ),
         }
         events.push({ type: 'curse-applied', card, curse })
       }

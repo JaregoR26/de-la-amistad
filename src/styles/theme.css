@@ -230,3 +230,14 @@
     transition: transform 1s ease;
   }
 }
+
+/* Switch del modo difícil: Bootstrap lo pinta de azul, lo llevamos a la paleta. */
+.form-check-input:checked {
+  background-color: var(--lantern);
+  border-color: var(--lantern);
+}
+
+.form-check-input:focus {
+  border-color: var(--lantern);
+  box-shadow: 0 0 0 0.25rem rgba(217, 160, 79, 0.25);
+}
