@@ -32,7 +32,16 @@ export default function App() {
     >
       <Navbar className="border-bottom position-relative">
         <Container>
-          <Navbar.Brand className="brand">De la Amistad</Navbar.Brand>
+          <div className="brand-block">
+            <a
+              className="studio-link"
+              href="/"
+              aria-label="Volver a Tlalocan Studios"
+            >
+              <span aria-hidden="true">‹</span> Tlalocan Studios
+            </a>
+            <Navbar.Brand className="brand">De la Amistad</Navbar.Brand>
+          </div>
           <div className="d-flex gap-2">
             <Button
               variant="outline-secondary"
@@ -71,7 +80,7 @@ export default function App() {
       </Container>
 
       <footer className="container pb-4 small text-body-secondary position-relative">
-        Basado en Scoundrel, de Zach Gage y Kurt Bieg.
+        Un juego de <a href="/">Tlalocan Studios</a>. Basado en Scoundrel, de Zach Gage y Kurt Bieg.  Musica de Alexis Bran.
       </footer>
 
       <RulesPanel show={showRules} onHide={() => setShowRules(false)} />

@@ -241,3 +241,32 @@
   border-color: var(--lantern);
   box-shadow: 0 0 0 0.25rem rgba(217, 160, 79, 0.25);
 }
+
+/* Enlace de regreso al sitio del estudio */
+.brand-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-block .brand {
+  padding: 0;
+  margin: 0;
+}
+
+.studio-link {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--fog);
+  text-decoration: none;
+}
+
+.studio-link:hover,
+.studio-link:focus-visible {
+  color: var(--lantern);
+  text-decoration: underline;
+}
+
+footer a {
+  color: var(--lantern);
+}
