@@ -11,6 +11,8 @@ import { MAX_HEALTH } from "./engine";
 import { useGame } from "./hooks/useGame";
 import { Dawn } from "./components/Dawn";
 import { HardModeSwitch } from "./components/HardModeSwitch";
+import { MusicToggle } from "./components/MusicToggle";
+import { useBackgroundMusic } from "./audio/useBackgroundMusic";
 
 /** Radio de la luz de la linterna: se cierra conforme baja la vida. */
 const lanternLight = (health: number): number =>
@@ -19,6 +21,7 @@ const lanternLight = (health: number): number =>
 export default function App() {
   const { game, playCard, flee, recall, newGame, setHardMode } = useGame();
   const [showRules, setShowRules] = useState(false);
+  const music = useBackgroundMusic();
 
   const lightStyle = {
     "--light": `${lanternLight(game.health)}%`,
@@ -43,6 +46,9 @@ export default function App() {
             <Navbar.Brand className="brand">De la Amistad</Navbar.Brand>
           </div>
           <div className="d-flex gap-2">
+            {music.available && (
+              <MusicToggle enabled={music.enabled} onToggle={music.toggle} />
+            )}
             <Button
               variant="outline-secondary"
               size="sm"
@@ -80,7 +86,8 @@ export default function App() {
       </Container>
 
       <footer className="container pb-4 small text-body-secondary position-relative">
-        Un juego de <a href="/">Tlalocan Studios</a>. Basado en Scoundrel, de Zach Gage y Kurt Bieg.  Musica de Alexis Bran.
+        Un juego de <a href="/">Tlalocan Studios</a>. Basado en Scoundrel, de
+        Zach Gage y Kurt Bieg. Musica de Alexis Bran.
       </footer>
 
       <RulesPanel show={showRules} onHide={() => setShowRules(false)} />
