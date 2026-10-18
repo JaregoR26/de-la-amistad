@@ -13,6 +13,9 @@ import { Dawn } from "./components/Dawn";
 import { HardModeSwitch } from "./components/HardModeSwitch";
 import { MusicToggle } from "./components/MusicToggle";
 import { useBackgroundMusic } from "./audio/useBackgroundMusic";
+import { hasSeenTutorial, markTutorialSeen } from "./tutorial/storage";
+import { TutorialInvite } from "./tutorial/TutorialInvite";
+import { TutorialScreen } from "./tutorial/TutorialScreen";
 
 /** Radio de la luz de la linterna: se cierra conforme baja la vida. */
 const lanternLight = (health: number): number =>
@@ -22,6 +25,22 @@ export default function App() {
   const { game, playCard, flee, recall, newGame, setHardMode } = useGame();
   const [showRules, setShowRules] = useState(false);
   const music = useBackgroundMusic();
+  const [tutorialOpen, setTutorialOpen] = useState(false);
+  const [showInvite, setShowInvite] = useState(() => !hasSeenTutorial());
+
+  const startTutorial = () => {
+    setShowRules(false);
+    setShowInvite(false);
+    setTutorialOpen(true);
+  };
+  const closeInvite = () => {
+    markTutorialSeen();
+    setShowInvite(false);
+  };
+  const exitTutorial = () => {
+    markTutorialSeen();
+    setTutorialOpen(false);
+  };
 
   const lightStyle = {
     "--light": `${lanternLight(game.health)}%`,
@@ -63,34 +82,47 @@ export default function App() {
         </Container>
       </Navbar>
 
-      <Container as="main" className="py-4 position-relative">
-        <h1 className="hero-line mb-3">
-          Pasan de las 3 de la mañana y sigues en la presa.
-        </h1>
-        <HardModeSwitch
-          hardMode={game.hardMode}
-          locked={game.log.length > 0}
-          onChange={setHardMode}
-        />
-        <Row className="g-4">
-          <Col lg={8}>
-            <Dawn game={game} />
-            <ZoneBoard game={game} onPlay={playCard} />
-          </Col>
-          <Col lg={4} className="d-flex flex-column gap-3">
-            <StatusPanel game={game} />
-            <EscapeControls game={game} onFlee={flee} onRecall={recall} />
-            <Chronicle log={game.log} />
-          </Col>
-        </Row>
-      </Container>
+      {tutorialOpen ? (
+        <TutorialScreen onExit={exitTutorial} />
+      ) : (
+        <Container as="main" className="py-4 position-relative">
+          <h1 className="hero-line mb-3">
+            Pasan de las 3 de la mañana y sigues en la presa.
+          </h1>
+          <HardModeSwitch
+            hardMode={game.hardMode}
+            locked={game.log.length > 0}
+            onChange={setHardMode}
+          />
+          <Row className="g-4">
+            <Col lg={8}>
+              <Dawn game={game} />
+              <ZoneBoard game={game} onPlay={playCard} />
+            </Col>
+            <Col lg={4} className="d-flex flex-column gap-3">
+              <StatusPanel game={game} />
+              <EscapeControls game={game} onFlee={flee} onRecall={recall} />
+              <Chronicle log={game.log} />
+            </Col>
+          </Row>
+        </Container>
+      )}
 
       <footer className="container pb-4 small text-body-secondary position-relative">
         Un juego de <a href="/">Tlalocan Studios</a>. Basado en Scoundrel, de
         Zach Gage y Kurt Bieg. Musica de Alexis Bran.
       </footer>
 
-      <RulesPanel show={showRules} onHide={() => setShowRules(false)} />
+      <RulesPanel
+        show={showRules}
+        onHide={() => setShowRules(false)}
+        onStartTutorial={startTutorial}
+      />
+      <TutorialInvite
+        show={showInvite && !tutorialOpen}
+        onStart={startTutorial}
+        onDismiss={closeInvite}
+      />
       <EndModal game={game} onNewGame={newGame} />
     </div>
   );

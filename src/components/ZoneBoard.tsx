@@ -16,7 +16,7 @@ export function ZoneBoard({ game, onPlay }: ZoneBoardProps) {
       : `Zona ${game.zonesCompleted + 1}`
 
   return (
-    <section aria-labelledby="zone-heading">
+    <section aria-labelledby="zone-heading" data-tutorial-target="zone">
       <h2 id="zone-heading" className="h5 text-body-secondary mb-3">
         {heading}
       </h2>

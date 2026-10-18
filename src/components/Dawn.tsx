@@ -29,7 +29,7 @@ export function Dawn({ game }: { readonly game: GameState }) {
   const sunOffset = (1 - p) * 27 // empieza escondido bajo la cresta y sube
 
   return (
-    <div className="dawn d-flex align-items-center gap-3 mb-4">
+    <div className="dawn d-flex align-items-center gap-3 mb-4" data-tutorial-target="dawn">
       <svg
         className="dawn__svg"
         viewBox="0 0 160 64"

@@ -16,11 +16,11 @@ export function EscapeControls({ game, onFlee, onRecall }: EscapeControlsProps) 
   const reason = game.bookmark ? (recall.ok ? null : RULE_ERROR[recall.error]) : flee.ok ? null : RULE_ERROR[flee.error]
 
   return (
-    <Card as="section" aria-label="Escapar">
+    <Card as="section" aria-label="Escapar" data-tutorial-target="escape">
       <Card.Body className="d-flex flex-column gap-2">
         <h2 className="h6 mb-0">Escapar</h2>
         <div className="d-grid gap-2">
-          <Button variant="outline-secondary" disabled={!flee.ok} onClick={onFlee}>
+          <Button variant="outline-secondary" disabled={!flee.ok} onClick={onFlee} data-tutorial-target="escape:flee">
             Huir: guardar esta zona
           </Button>
           <Button variant="outline-secondary" disabled={!recall.ok} onClick={onRecall}>

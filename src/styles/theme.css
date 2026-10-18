@@ -270,3 +270,79 @@
 footer a {
   color: var(--lantern);
 }
+
+/* Tutorial interactivo */
+.tutorial-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 1060;
+  background: rgba(3, 8, 7, 0.72);
+}
+
+.tutorial-ring {
+  position: fixed;
+  z-index: 1061;
+  pointer-events: none;
+  border: 2px solid var(--lantern);
+  border-radius: 12px;
+  box-shadow: 0 0 22px rgba(217, 160, 79, 0.45);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tutorial-ring {
+    animation: tutorial-pulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes tutorial-pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(217, 160, 79, 0.3); }
+    50% { box-shadow: 0 0 26px rgba(217, 160, 79, 0.65); }
+  }
+}
+
+.tutorial-coach {
+  position: fixed;
+  z-index: 1062;
+  left: var(--coach-x);
+  top: var(--coach-y);
+  width: min(360px, calc(100vw - 24px));
+  padding: 1rem 1.1rem;
+  background: var(--mud-raised);
+  border: 1px solid var(--lantern);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+.tutorial-coach.is-above {
+  transform: translateY(-100%);
+}
+
+.tutorial-coach__text {
+  margin: 0 0 0.8rem;
+  font-size: 1.05rem;
+}
+
+.tutorial-coach__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 767.98px) {
+  .tutorial-coach,
+  .tutorial-coach.is-above {
+    left: 12px;
+    right: 12px;
+    top: auto;
+    bottom: 12px;
+    width: auto;
+    transform: none;
+  }
+
+  /* Si lo resaltado es muy alto (la zona de cartas), el globo sube. */
+  .tutorial-coach.is-top {
+    top: 12px;
+    bottom: auto;
+  }
+}

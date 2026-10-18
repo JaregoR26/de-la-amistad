@@ -11,7 +11,7 @@ export function StatusPanel({ game }: { readonly game: GameState }) {
   return (
     <Card as="section" aria-label="Estado del jugador">
       <Card.Body className="d-flex flex-column gap-3">
-        <div>
+        <div data-tutorial-target="health">
           <div className="d-flex justify-content-between align-items-baseline mb-1">
             <h2 className="h6 mb-0">Vida</h2>
             <span className="fs-5 fw-bold">
@@ -26,7 +26,7 @@ export function StatusPanel({ game }: { readonly game: GameState }) {
           />
         </div>
 
-        <div>
+        <div data-tutorial-target="weapon">
           <h2 className="h6">Arma</h2>
           {weapon ? (
             <p className="mb-0">

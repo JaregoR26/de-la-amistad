@@ -1,11 +1,12 @@
-import { Accordion, Offcanvas } from "react-bootstrap";
+import { Accordion, Button, Offcanvas } from "react-bootstrap";
 
 interface RulesPanelProps {
   readonly show: boolean;
   readonly onHide: () => void;
+  readonly onStartTutorial: () => void;
 }
 
-export function RulesPanel({ show, onHide }: RulesPanelProps) {
+export function RulesPanel({ show, onHide, onStartTutorial }: RulesPanelProps) {
   return (
     <Offcanvas
       show={show}
@@ -19,6 +20,11 @@ export function RulesPanel({ show, onHide }: RulesPanelProps) {
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
+        <div className="d-grid mb-3">
+          <Button variant="warning" onClick={onStartTutorial}>
+            Ver el tutorial interactivo
+          </Button>
+        </div>
         <Accordion defaultActiveKey="0" flush>
           <Accordion.Item eventKey="0">
             <Accordion.Header>La noche</Accordion.Header>

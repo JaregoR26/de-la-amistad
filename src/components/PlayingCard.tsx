@@ -50,7 +50,7 @@ export function PlayingCard({ card, game, onPlay }: PlayingCardProps) {
   function renderActions() {
     if (kind === 'weapon') {
       return (
-        <Button variant="warning" size="sm" onClick={() => onPlay(card.id, false)}>
+        <Button variant="warning" size="sm" data-tutorial-target={`${card.id}:play`} onClick={() => onPlay(card.id, false)}>
           Empuñar
         </Button>
       )
@@ -58,14 +58,14 @@ export function PlayingCard({ card, game, onPlay }: PlayingCardProps) {
     if (kind === 'potion') {
       const heal = previewHeal(game, card)
       return (
-        <Button variant="warning" size="sm" onClick={() => onPlay(card.id, false)}>
+        <Button variant="warning" size="sm" data-tutorial-target={`${card.id}:play`} onClick={() => onPlay(card.id, false)}>
           {heal > 0 ? `Tomar (+${heal} de vida)` : 'Tomar (sin efecto)'}
         </Button>
       )
     }
     if (kind === 'curse') {
       return (
-        <Button variant="outline-danger" size="sm" onClick={() => onPlay(card.id, false)}>
+        <Button variant="outline-danger" size="sm" data-tutorial-target={`${card.id}:play`} onClick={() => onPlay(card.id, false)}>
           Enfrentar
         </Button>
       )
@@ -82,6 +82,7 @@ export function PlayingCard({ card, game, onPlay }: PlayingCardProps) {
             variant={weaponDamage >= game.health ? 'outline-danger' : 'warning'}
             size="sm"
             disabled={issue !== null}
+            data-tutorial-target={`${card.id}:weapon`}
             onClick={() => onPlay(card.id, true)}
             title={issue ? RULE_ERROR[issue] : undefined}
           >
@@ -91,6 +92,7 @@ export function PlayingCard({ card, game, onPlay }: PlayingCardProps) {
         <Button
           variant={bareDamage >= game.health ? 'outline-danger' : 'outline-secondary'}
           size="sm"
+          data-tutorial-target={`${card.id}:hand`}
           onClick={() => onPlay(card.id, false)}
         >
           {`Pelear a mano (−${bareDamage})`}
