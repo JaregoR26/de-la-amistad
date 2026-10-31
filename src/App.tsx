@@ -7,7 +7,7 @@ import { EscapeControls } from "./components/EscapeControls";
 import { RulesPanel } from "./components/RulesPanel";
 import { StatusPanel } from "./components/StatusPanel";
 import { ZoneBoard } from "./components/ZoneBoard";
-import { MAX_HEALTH } from "./engine";
+import { dawnProgress, MAX_HEALTH } from "./engine";
 import { useGame } from "./hooks/useGame";
 import { Dawn } from "./components/Dawn";
 import { HardModeSwitch } from "./components/HardModeSwitch";
@@ -44,6 +44,7 @@ export default function App() {
 
   const lightStyle = {
     "--light": `${lanternLight(game.health)}%`,
+    "--dawn": dawnProgress(game).toFixed(3),
   } as CSSProperties;
 
   return (

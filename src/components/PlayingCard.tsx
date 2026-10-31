@@ -1,4 +1,5 @@
 import { Button, Card } from 'react-bootstrap'
+import { cardArt } from '../content/cardArt'
 import { cardAriaLabel, cardName, curseOfCard, KIND_LABEL, RULE_ERROR } from '../content/es'
 import {
   isDamaging,
@@ -19,6 +20,7 @@ interface PlayingCardProps {
 
 export function PlayingCard({ card, game, onPlay }: PlayingCardProps) {
   const kind = kindOf(card)
+  const art = cardArt(card.id)
   const curse = curseOfCard(card)
   const stat = {
     weapon: `Ataque ${card.rank}`,
@@ -30,6 +32,9 @@ export function PlayingCard({ card, game, onPlay }: PlayingCardProps) {
 
   return (
     <Card as="article" className="play-card h-100" data-kind={kind} data-suit={card.suit} aria-label={cardAriaLabel(card)}>
+      <div className={art ? 'play-card__art has-art' : 'play-card__art'} aria-hidden="true">
+        {art && <img src={art} alt="" loading="lazy" draggable={false} />}
+      </div>
       <Card.Body className="d-flex flex-column gap-2">
         <div className="play-card__corner" aria-hidden="true">
           <span>{rankLabel(card.rank)}</span>

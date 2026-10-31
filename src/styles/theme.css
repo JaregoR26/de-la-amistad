@@ -1,87 +1,107 @@
-/*
- * Tema "3 a. m. en la presa": se apoya en las variables CSS de Bootstrap 5.3
- * (data-bs-theme="dark") y solo redefine paleta, tipografía y las tarjetas de juego.
- */
-
 @property --light {
   syntax: '<percentage>';
   inherits: false;
   initial-value: 100%;
 }
 
+/* Avance hacia el amanecer: 0 = plena noche, 1 = amanece. Lo fija App.tsx. */
+@property --dawn {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
 :root[data-bs-theme='dark'] {
-  --abyss: #0b1412;
-  --mud: #16231f;
-  --mud-raised: #1d2f29;
-  --fog: #9bafa4;
-  --bone: #e6dfc9;
-  --lantern: #d9a04f;
-  --blood: #c4504a;
-  --moss: #6aa17c;
-  --rust: #b9794a;
-  --water: #7fb0c4;
-  --veil: #a58bc0;
+  /* Paleta: cielo del desierto, adobe, pigmentos naturales */
+  --abyss: #091016;      /* cielo de medianoche */
+  --mud: #1c1814;        /* adobe oscuro */
+  --mud-raised: #2a231b; /* amate a la luz de la linterna */
+  --fog: #aab5a9;        /* polvo / salvia */
+  --bone: #ede2c8;       /* papel amate */
+  --lantern: #e0a24a;    /* ocre, la linterna */
+  --blood: #cc5242;      /* grana cochinilla */
+  --moss: #7fae7a;       /* lechuguilla */
+  --rust: #c0784a;       /* tierra de caliche */
+  --water: #6fb5b8;      /* agua de la presa */
+  --veil: #b48fc2;       /* flor de nopal al anochecer */
+
+  /* Texturas (SVG en línea: sin archivos extra ni peticiones) */
+  --land: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 320' preserveAspectRatio='none'%3E %3Cpath d='M0 210 L80 188 L150 204 L240 158 L330 190 L420 148 L520 186 L610 168 L700 200 L800 162 L900 194 L1000 172 L1100 200 L1200 210 V320 H0Z' fill='%230f1c22'/%3E %3Cpath d='M0 250 L120 236 L260 252 L380 232 L520 250 L660 238 L800 254 L940 236 L1080 250 L1200 250 V320 H0Z' fill='%230c171a'/%3E %3Cpath d='M0 276 Q300 258 600 274 T1200 276 V320 H0Z' fill='%23080e10'/%3E %3Cg stroke='%23080e10' stroke-width='3' stroke-linecap='round' fill='none'%3E %3Cpath d='M180 276 L176 222 M180 276 L168 214 M180 276 L190 206 M180 276 L200 220 M180 276 L158 232 M176 222 L170 196 M190 206 L194 184 M200 220 L214 200'/%3E %3Cpath d='M460 276 L440 232 M460 276 L450 222 M460 276 L462 216 M460 276 L474 224 M460 276 L484 236 M460 276 L424 250 M460 276 L498 252'/%3E %3Cpath d='M1010 278 L996 246 M1010 278 L1004 240 M1010 278 L1014 238 M1010 278 L1024 244 M1010 278 L1036 254'/%3E %3C/g%3E %3Cg fill='%23080e10'%3E %3Cellipse cx='820' cy='262' rx='15' ry='20'/%3E%3Cellipse cx='798' cy='236' rx='11' ry='16' transform='rotate(-24 798 236)'/%3E %3Cellipse cx='846' cy='238' rx='11' ry='16' transform='rotate(22 846 238)'/%3E%3Cellipse cx='848' cy='210' rx='8' ry='12' transform='rotate(18 848 210)'/%3E %3C/g%3E %3Crect y='282' width='1200' height='38' fill='%230b2026'/%3E %3Cg stroke='%236fb5b8' stroke-opacity='.16' stroke-width='1.5' stroke-linecap='round'%3E %3Cpath d='M60 296 H220 M300 304 H470 M560 294 H700 M780 306 H960 M1030 296 H1150'/%3E%3C/g%3E %3Crect y='280' width='1200' height='3' fill='%23080e10'/%3E %3C/svg%3E");
+  --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14' fill='none' stroke-linecap='round'%3E%3Cpath d='M0 5 Q7 -1 14 5 T28 5' stroke='%236fb5b8' stroke-width='1.8'/%3E%3Cpath d='M0 11 Q7 5 14 11 T28 11' stroke='%236fb5b8' stroke-opacity='.4' stroke-width='1.4'/%3E%3C/svg%3E");
+  --greca: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='14' fill='none' stroke='%23c0784a' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M1 13V1H13V9H6V5H9'/%3E%3C/svg%3E");
 
   --bs-body-bg: var(--abyss);
   --bs-body-color: var(--bone);
   --bs-secondary-color: var(--fog);
   --bs-body-font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
-  --bs-border-color: #2b4038;
+  --bs-border-color: #43372a;
   --bs-card-bg: var(--mud);
   --bs-card-cap-bg: transparent;
-  --bs-card-border-color: #2b4038;
+  --bs-card-border-color: #43372a;
 
   /* Los colores semánticos de Bootstrap se re-asignan a la paleta del juego. */
-  --bs-warning-rgb: 217, 160, 79;
-  --bs-danger-rgb: 196, 80, 74;
-  --bs-success-rgb: 106, 161, 124;
-  --bs-info-rgb: 165, 139, 192;
-  --bs-secondary-rgb: 155, 175, 164;
+  --bs-warning-rgb: 224, 162, 74;
+  --bs-danger-rgb: 204, 82, 66;
+  --bs-success-rgb: 127, 174, 122;
+  --bs-info-rgb: 180, 143, 194;
+  --bs-secondary-rgb: 170, 181, 169;
 }
 
 /* Botones: Bootstrap los pinta con variables propias por componente. */
+.btn {
+  /* Esquinas ligeramente desiguales: trazo hecho a mano, no a regla. */
+  --bs-btn-border-radius: 10px 7px 10px 8px / 8px 10px 7px 10px;
+}
+
 .btn-warning {
   --bs-btn-color: #1c1306;
   --bs-btn-bg: var(--lantern);
   --bs-btn-border-color: var(--lantern);
   --bs-btn-hover-color: #1c1306;
-  --bs-btn-hover-bg: #e8b672;
-  --bs-btn-hover-border-color: #e8b672;
+  --bs-btn-hover-bg: #eebb74;
+  --bs-btn-hover-border-color: #eebb74;
   --bs-btn-active-color: #1c1306;
-  --bs-btn-active-bg: #c48c3f;
-  --bs-btn-active-border-color: #c48c3f;
-  --bs-btn-focus-shadow-rgb: 217, 160, 79;
+  --bs-btn-active-bg: #c98f40;
+  --bs-btn-active-border-color: #c98f40;
+  --bs-btn-focus-shadow-rgb: 224, 162, 74;
   --bs-btn-disabled-color: #1c1306;
   --bs-btn-disabled-bg: #6e5a3a;
   --bs-btn-disabled-border-color: #6e5a3a;
 }
 
 .btn-outline-danger {
-  --bs-btn-color: #e07a73;
+  --bs-btn-color: #e5826f;
   --bs-btn-border-color: var(--blood);
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: var(--blood);
   --bs-btn-hover-border-color: var(--blood);
-  --bs-btn-active-bg: #a8403b;
-  --bs-btn-active-border-color: #a8403b;
-  --bs-btn-focus-shadow-rgb: 196, 80, 74;
+  --bs-btn-active-bg: #aa4234;
+  --bs-btn-active-border-color: #aa4234;
+  --bs-btn-focus-shadow-rgb: 204, 82, 66;
 }
 
 .btn-outline-secondary {
   --bs-btn-color: var(--bone);
-  --bs-btn-border-color: #4a6258;
+  --bs-btn-border-color: #5b4d3b;
   --bs-btn-hover-color: var(--abyss);
   --bs-btn-hover-bg: var(--fog);
   --bs-btn-hover-border-color: var(--fog);
   --bs-btn-active-color: var(--abyss);
-  --bs-btn-active-bg: #8aa095;
-  --bs-btn-disabled-color: #6d8278;
-  --bs-btn-disabled-border-color: #33463e;
+  --bs-btn-active-bg: #909b8f;
+  --bs-btn-disabled-color: #7a8077;
+  --bs-btn-disabled-border-color: #3d3328;
 }
 
+/* La vida se lee como el nivel del agua en la presa. */
 .progress {
-  --bs-progress-bg: #223630;
+  --bs-progress-bg: #1a2a2c;
   --bs-progress-height: 0.85rem;
+  --bs-progress-border-radius: 999px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.progress-bar {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(0, 0, 0, 0.14));
 }
 
 .accordion {
@@ -101,11 +121,38 @@
 /*  Mesa                                                                   */
 /* ---------------------------------------------------------------------- */
 
+/*
+ * El cielo: un degradado de desierto a medianoche con pocas estrellas fijas.
+ * Va en la mesa y no en el body para no pelearse con Bootstrap.
+ */
 .night-table {
   --light: 100%;
+  --dawn: 0;
+  --star: max(0, 1 - var(--dawn) * 1.6); /* las estrellas se apagan al amanecer */
   position: relative;
   min-height: 100vh;
   isolation: isolate;
+  background:
+    radial-gradient(1.4px 1.4px at 7% 5%, rgb(237 226 200 / calc(0.75 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1px 1px at 16% 13%, rgb(237 226 200 / calc(0.5 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 27% 4%, rgb(237 226 200 / calc(0.65 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1px 1px at 38% 11%, rgb(237 226 200 / calc(0.45 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1.6px 1.6px at 49% 6%, rgb(237 226 200 / calc(0.8 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1px 1px at 58% 15%, rgb(237 226 200 / calc(0.5 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 67% 3%, rgb(237 226 200 / calc(0.6 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1px 1px at 76% 12%, rgb(237 226 200 / calc(0.45 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1.4px 1.4px at 85% 7%, rgb(237 226 200 / calc(0.7 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1px 1px at 93% 16%, rgb(237 226 200 / calc(0.5 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1px 1px at 22% 24%, rgb(237 226 200 / calc(0.35 * var(--star))) 50%, transparent 55%),
+    radial-gradient(1px 1px at 71% 26%, rgb(237 226 200 / calc(0.35 * var(--star))) 50%, transparent 55%),
+    radial-gradient(ellipse 80% 42% at 50% 100%, rgb(240 184 120 / calc(var(--dawn) * 0.12)), transparent 72%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #050b11, #1d3346 calc(var(--dawn) * 100%)) 0%,
+      color-mix(in srgb, #0a1820, #3a3a44 calc(var(--dawn) * 100%)) 50%,
+      color-mix(in srgb, #112122, #3d3029 calc(var(--dawn) * 100%)) 100%
+    );
+  background-attachment: fixed;
 }
 
 /*
@@ -114,6 +161,8 @@
  * contenido, así que las cartas siempre se leen.
  */
 .night-table::before {
+  /* --light no hereda por defecto: sin esto el pseudo-elemento siempre veía 100%. */
+  --light: inherit;
   content: '';
   position: fixed;
   inset: 0;
@@ -122,8 +171,8 @@
   background:
     radial-gradient(
       circle at 50% 28%,
-      rgba(217, 160, 79, 0.16) 0,
-      rgba(217, 160, 79, 0) calc(var(--light) * 0.62)
+      rgba(224, 162, 74, 0.16) 0,
+      rgba(224, 162, 74, 0) calc(var(--light) * 0.62)
     ),
     radial-gradient(
       circle at 50% 28%,
@@ -132,7 +181,29 @@
     );
 }
 
+/*
+ * El horizonte: sierra, ocotillo, lechuguilla, nopal y el espejo de la presa.
+ * Queda por debajo de la oscuridad de la linterna (z-index -2), así que se
+ * apaga junto con ella cuando baja la vida.
+ */
+.night-table::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(34vh, 320px);
+  z-index: -2;
+  pointer-events: none;
+  background: var(--land) repeat-x left bottom / auto 100%;
+  opacity: 0.9;
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  .night-table {
+    transition: --dawn 1.2s ease;
+  }
+
   .night-table::before {
     transition: --light 0.9s ease;
   }
@@ -166,25 +237,64 @@
   line-height: 1.15;
   max-width: 30ch;
   text-wrap: balance;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
 }
 
 /* ---------------------------------------------------------------------- */
-/*  Cartas                                                                 */
+/*  Paneles (vida, escapar, crónica…)                                      */
+/* ---------------------------------------------------------------------- */
+
+.card {
+  border-radius: 14px 10px 14px 11px / 11px 14px 10px 14px;
+  box-shadow: 0 14px 28px -18px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(237, 226, 200, 0.04);
+}
+
+/* ---------------------------------------------------------------------- */
+/*  Cartas: superficie limpia y glifo provisional por tipo                 */
 /* ---------------------------------------------------------------------- */
 
 .play-card {
   --kind: var(--fog);
+  --mark: none;
   background: linear-gradient(180deg, var(--mud-raised), var(--mud));
   border-color: color-mix(in srgb, var(--kind) 45%, transparent);
-  border-top: 3px solid var(--kind);
+  border-top: 4px solid var(--kind);
+  border-radius: 13px 8px 12px 9px / 9px 12px 8px 13px;
   min-height: 11rem;
 }
 
-.play-card[data-kind='weapon'] { --kind: var(--lantern); }
-.play-card[data-kind='potion'] { --kind: var(--moss); }
-.play-card[data-kind='fauna'] { --kind: var(--rust); }
-.play-card[data-kind='spirit'] { --kind: var(--water); }
-.play-card[data-kind='curse'] { --kind: var(--veil); }
+.play-card[data-kind='weapon'] { --kind: var(--lantern); --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%23e0a24a' fill-opacity='.34' stroke='%23e0a24a' stroke-opacity='.34' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 54 L50 14' fill='none'/%3E%3Cpath d='M52 12 L34 16 L48 30Z'/%3E%3Cpath d='M14 50 L8 56 M20 44 L12 46 M26 38 L24 30' fill='none' stroke-width='3'/%3E%3C/svg%3E"); }
+.play-card[data-kind='potion'] { --kind: var(--moss);    --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%237fae7a' fill-opacity='.34' stroke='%237fae7a' stroke-opacity='.34' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M32 58 L32 12 M32 58 L16 22 M32 58 L48 22 M32 58 L6 40 M32 58 L58 40' fill='none'/%3E%3C/svg%3E"); }
+.play-card[data-kind='fauna']  { --kind: var(--rust);    --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%23c0784a' fill-opacity='.34' stroke='%23c0784a' stroke-opacity='.34' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cellipse cx='32' cy='42' rx='13' ry='10' stroke='none'/%3E%3Ccircle cx='13' cy='29' r='5' stroke='none'/%3E%3Ccircle cx='25' cy='18' r='5' stroke='none'/%3E%3Ccircle cx='39' cy='18' r='5' stroke='none'/%3E%3Ccircle cx='51' cy='29' r='5' stroke='none'/%3E%3C/svg%3E"); }
+.play-card[data-kind='spirit'] { --kind: var(--water);   --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%236fb5b8' fill-opacity='.34' stroke='%236fb5b8' stroke-opacity='.34' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M32 6 C32 6 14 28 14 41 a18 18 0 0 0 36 0 C50 28 32 6 32 6Z' stroke='none'/%3E%3C/svg%3E"); }
+.play-card[data-kind='curse']  { --kind: var(--veil);    --mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%23b48fc2' fill-opacity='.34' stroke='%23b48fc2' stroke-opacity='.34' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M32 32 m-3 0 a3 3 0 0 1 6 0 a7 7 0 0 1 -14 0 a11 11 0 0 1 22 0 a15 15 0 0 1 -30 0 a19 19 0 0 1 38 0' fill='none' stroke-width='3.5'/%3E%3C/svg%3E"); }
+
+/*
+ * Hueco de ilustración. Con arte real (src/assets/cards/<id>.webp) se muestra la
+ * imagen; sin arte, un glifo provisional del tipo de carta.
+ * Para cambiar la proporción: --art-ratio (p. ej. 3 / 4 para carta vertical).
+ */
+.play-card__art {
+  --art-ratio: 4 / 3;
+  aspect-ratio: var(--art-ratio);
+  overflow: hidden;
+  border-radius: 8px 4px 0 0 / 5px 8px 0 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--kind) 30%, transparent);
+  background:
+    var(--mark) center / 40% no-repeat,
+    radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--kind) 16%, transparent), transparent 72%);
+}
+
+.play-card__art.has-art {
+  background: none;
+}
+
+.play-card__art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 .play-card__corner {
   display: flex;
@@ -197,7 +307,7 @@
 
 .play-card[data-suit='hearts'] .play-card__corner,
 .play-card[data-suit='diamonds'] .play-card__corner {
-  color: var(--blood);
+  color: #e2705e;
 }
 
 .play-card__name {
@@ -212,22 +322,65 @@
   font-size: 0.9rem;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  /* Responde a la persona: la carta se levanta un poco al señalarla. */
+  .play-card {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .play-card:hover {
+    transform: translateY(-3px) rotate(-0.4deg);
+    box-shadow: 0 16px 26px -14px rgba(0, 0, 0, 0.85);
+  }
+}
+
 .chronicle__item {
   font-size: 0.95rem;
 }
 
-/* Amanecer (avance del mazo) */
-.dawn__svg {
+/* Amanecer (avance del mazo): línea de agua que se llena y un sol que la recorre. */
+.dawn__line {
+  --p: 0;
+  position: relative;
   flex: none;
   width: 10rem;
-  height: auto;
-  border: 1px solid var(--bs-border-color);
-  border-radius: 0.5rem;
+  height: 14px;
+}
+
+.dawn__track,
+.dawn__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--wave) repeat-x left center / 28px 14px;
+}
+
+.dawn__track {
+  opacity: 0.25;
+}
+
+.dawn__fill {
+  width: calc(var(--p) * 100%);
+}
+
+.dawn__sun {
+  position: absolute;
+  top: 2px;
+  left: calc(var(--p) * (100% - 10px));
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--lantern);
+  box-shadow: 0 0 10px 2px rgba(224, 162, 74, 0.55);
+  opacity: calc(0.4 + var(--p) * 0.6);
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .dawn__fill {
+    transition: width 1s ease;
+  }
+
   .dawn__sun {
-    transition: transform 1s ease;
+    transition: left 1s ease, opacity 1s ease;
   }
 }
 
@@ -239,7 +392,7 @@
 
 .form-check-input:focus {
   border-color: var(--lantern);
-  box-shadow: 0 0 0 0.25rem rgba(217, 160, 79, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(224, 162, 74, 0.25);
 }
 
 /* Enlace de regreso al sitio del estudio */
@@ -271,12 +424,22 @@ footer a {
   color: var(--lantern);
 }
 
+/* Greca escalonada sobre el pie: guiño al diseño mexica, muy discreta. */
+footer::before {
+  content: '';
+  display: block;
+  height: 14px;
+  margin-bottom: 0.9rem;
+  background: var(--greca) repeat-x left center / 20px 14px;
+  opacity: 0.45;
+}
+
 /* Tutorial interactivo */
 .tutorial-veil {
   position: fixed;
   inset: 0;
   z-index: 1060;
-  background: rgba(3, 8, 7, 0.72);
+  background: rgba(3, 7, 10, 0.74);
 }
 
 .tutorial-ring {
@@ -285,7 +448,7 @@ footer a {
   pointer-events: none;
   border: 2px solid var(--lantern);
   border-radius: 12px;
-  box-shadow: 0 0 22px rgba(217, 160, 79, 0.45);
+  box-shadow: 0 0 22px rgba(224, 162, 74, 0.45);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -294,8 +457,8 @@ footer a {
   }
 
   @keyframes tutorial-pulse {
-    0%, 100% { box-shadow: 0 0 10px rgba(217, 160, 79, 0.3); }
-    50% { box-shadow: 0 0 26px rgba(217, 160, 79, 0.65); }
+    0%, 100% { box-shadow: 0 0 10px rgba(224, 162, 74, 0.3); }
+    50% { box-shadow: 0 0 26px rgba(224, 162, 74, 0.65); }
   }
 }
 
@@ -308,7 +471,7 @@ footer a {
   padding: 1rem 1.1rem;
   background: var(--mud-raised);
   border: 1px solid var(--lantern);
-  border-radius: 14px;
+  border-radius: 14px 10px 14px 11px / 11px 14px 10px 14px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
 }
 
